@@ -17,7 +17,8 @@ import java.util.Properties;
 import java.util.Scanner;
 
 /**
- * com.santhoshjogula.servlets.MyServlet implementation class com.santhoshjogula.servlets.MyServlet
+ * This class extends HttpServlet to create a servlet that handles HTTP requests for weather data.
+ * It uses the OpenWeatherMap API to fetch weather data for a specified city.
  */
 @WebServlet("/weather")
 public class MyServlet extends HttpServlet {
@@ -27,13 +28,26 @@ public class MyServlet extends HttpServlet {
     private static String apiBaseUrl;
 
     /**
-     * @see HttpServlet#HttpServlet()
+     * Default constructor for the MyServlet class.
      */
     public MyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * This method is called by the servlet container to indicate to a servlet that the servlet is being placed into service.
+     * The servlet container calls the init method exactly once after instantiating the servlet.
+     * The init method must complete successfully before the servlet can receive any requests.
+     * <p>
+     * In this implementation, the method retrieves the path to a configuration file from the context parameters,
+     * ensures the configFile parameter is not null, and loads properties from the configuration file.
+     * It then retrieves values from the properties object.
+     *
+     * @param config a ServletConfig object containing the servlet's configuration and initialization parameters
+     * @throws ServletException if an exception has occurred that interferes with the servlet's normal operation
+     */
+    @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
@@ -68,14 +82,26 @@ public class MyServlet extends HttpServlet {
     }
 
     /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     * Handles HTTP GET requests.
+     * This method redirects the client to the index.html page.
+     *
+     * @param request  the HttpServletRequest object that contains the request the client made of the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the GET could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the GET request
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("index.html");
     }
 
     /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     * Handles HTTP POST requests.
+     * This method fetches weather data for a specified city from the OpenWeatherMap API and forwards the data to a JSP page for rendering.
+     *
+     * @param request  the HttpServletRequest object that contains the request the client made of the servlet
+     * @param response the HttpServletResponse object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException      if an input or output error is detected when the servlet handles the POST request
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the city from the form input
